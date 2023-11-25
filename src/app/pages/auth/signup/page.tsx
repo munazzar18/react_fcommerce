@@ -20,7 +20,7 @@ const SignUp = () => {
     email: "",
     address: "",
     password: "",
-    roles: "",
+    roles: "user",
   });
 
   const becomeSeller = () => {
@@ -31,10 +31,6 @@ const SignUp = () => {
   };
 
   const onChange = (e: any) => {
-    if (formData.roles === "") {
-      delete formData.roles;
-    }
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -51,12 +47,12 @@ const SignUp = () => {
       );
       toast.success(res.data.message, {
         position: toast.POSITION.TOP_LEFT,
-        autoClose: 2000,
+        autoClose: 3000,
       });
     } catch (error: any) {
       toast.error(error.response.data.message, {
         position: toast.POSITION.TOP_LEFT,
-        autoClose: 2000,
+        autoClose: 3000,
       });
     }
 
@@ -82,7 +78,7 @@ const SignUp = () => {
           />
         </div>
         <div className="p-2">
-          <div className="grid grid-cols-2 p-9 shadow-2xl rounded-xl bg-gradient-to-r from-cyan-50 to-blue-100">
+          <div className="grid grid-cols-2 p-9 shadow-2xl rounded-3xl bg-gradient-to-r from-cyan-50 to-blue-100">
             <div className="mb-4 mx-1 col-span-full">
               <Box sx={{ width: "100%", maxWidth: 500 }}>
                 <Typography variant="h5" gutterBottom>
@@ -225,7 +221,7 @@ const SignUp = () => {
                 />
               </Box>
             </div>
-            <div className="mb-2 mx-1">
+            <div className="mb-2 mx-1 border border-slate-400 rounded-md flex justify-center items-center">
               <FormGroup>
                 <FormControlLabel
                   control={
@@ -250,7 +246,7 @@ const SignUp = () => {
                 >
                   Submit
                 </Button>
-                <ToastContainer autoClose={2000} />
+                <ToastContainer autoClose={3000} />
               </Stack>
             </div>
           </div>
