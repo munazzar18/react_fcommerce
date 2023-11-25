@@ -3,6 +3,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import LoginIcon from "@mui/icons-material/Login";
+import Typography from "@mui/material/Typography";
 
 const Login = () => {
   const router = useRouter();
@@ -45,60 +51,87 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex justify-center justify-items-center m-10">
-        <div className="p-9 shadow-2xl w-50 rounded-xl bg-slate-100">
-          <div className="mb-5">
-            <h1 className="font-mono font-black text-2xl">Sign in</h1>
-          </div>
-          <div className="mb-2">
-            <div>
-              <label className="font-mono font-bold">Email</label>
+      <div className="flex flex-row mt-24 justify-center">
+        <div className="p-2 ">
+          <img
+            src="../../../../../signup-1.png"
+            alt="sign up here"
+            className="h-[550px]"
+          />
+        </div>
+        <div className="p-2">
+          <div className="grid grid-cols-2 w-96 h-[460px] p-9 shadow-2xl rounded-3xl bg-gradient-to-r from-cyan-50 to-blue-100">
+            <div className="mb-4 mx-1 col-span-full">
+              <Box sx={{ width: "100%", maxWidth: 500 }}>
+                <Typography variant="h5" gutterBottom>
+                  Welcome Back!
+                </Typography>
+              </Box>
             </div>
-            <div className="mb-2">
-              <input
-                type="text"
-                onChange={onChange}
-                value={formData.email}
-                placeholder="Enter your Email"
-                className=" font-mono rounded-2xl border-2 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300
-            placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus: ring-slate-400 sm:text-sm sm:leading-6"
-                name="email"
-              />
-            </div>
-          </div>
 
-          <div className="mb-2">
-            <div>
-              <label className="font-mono font-bold">Password</label>
-            </div>
-            <div className="mb-2">
-              <input
-                value={formData.password}
-                onChange={onChange}
-                type="password"
-                placeholder="Enter your password"
-                className="font-mono rounded-2xl border-2 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300
-            placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus: ring-slate-400 sm:text-sm sm:leading-6"
-                name="password"
-              />
-            </div>
-          </div>
-
-          <div className="justify-end">
-            <div className="rounded-md">
-              <button
-                onClick={handleSubmit}
-                className="rounded-2xl border-2 p-2 shadow-sm text-gray-900 hover:ring-2 ring-slate-800 active:shadow-lg active:bg-slate-400"
+            <div className="mb-2 mx-1 col-span-full">
+              <Box
+                component="form"
+                sx={{
+                  "& > :not(style)": { width: "30ch" },
+                }}
+                noValidate
+                autoComplete="off"
               >
-                Sign In
-              </button>
-              <ToastContainer autoClose={1000} />
+                <TextField
+                  type="text"
+                  id="outlined-basic"
+                  label="Email"
+                  color="secondary"
+                  variant="outlined"
+                  placeholder="Enter your email"
+                  name="email"
+                  onChange={onChange}
+                  value={formData.email}
+                />
+              </Box>
+            </div>
+
+            <div className="mb-2 mx-1">
+              <Box
+                component="form"
+                sx={{
+                  "& > :not(style)": { width: "30ch" },
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <TextField
+                  type="password"
+                  id="outlined-basic"
+                  label="Password"
+                  color="secondary"
+                  variant="outlined"
+                  placeholder="Enter your password"
+                  name="password"
+                  onChange={onChange}
+                  value={formData.password}
+                />
+              </Box>
+            </div>
+
+            <div className="mb-2 mx-1 col-span-full">
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="outlined"
+                  startIcon={<LoginIcon />}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+                <ToastContainer autoClose={3000} />
+              </Stack>
             </div>
           </div>
         </div>
+        <div />
       </div>
     </>
   );
 };
-
 export default Login;
