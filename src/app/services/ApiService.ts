@@ -1,5 +1,8 @@
+"use client"
 import axios, { AxiosResponse } from "axios";
 import JwtService from "./JwtService";
+
+const baseUrl = "http://localhost:5005/api/"
 
 class ApiService {
 
@@ -11,12 +14,12 @@ class ApiService {
     }
 
     public static upload(resource: string, params: any): Promise<AxiosResponse> {
-        return axios.post(`${resource}`, params)
+        return axios.post(`${baseUrl}${resource}`, params)
     }
 
 
     public static get(resource: string,): Promise<AxiosResponse> {
-        return axios.get(`${resource}`);
+        return axios.get(`${baseUrl}${resource}`);
     }
 
 
