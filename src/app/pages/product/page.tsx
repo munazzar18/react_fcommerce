@@ -19,6 +19,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import SearchIcon from "@mui/icons-material/Search";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 interface Product {
   id: number;
@@ -41,6 +42,8 @@ export default function Product() {
   const [loader, setLoader] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [category, setCategory] = useState<any>("");
+
+  const router = useRouter()
 
   const [search, setSearch] = useState("");
 
@@ -97,6 +100,10 @@ export default function Product() {
     getCategories();
   }, [category]);
 
+  const handleProduct = (id: number) => {
+      router.push(`/pages/product/${id}`)
+  }
+
   let loading;
 
   if (loader === true) {
@@ -151,9 +158,10 @@ export default function Product() {
         <div className="flex flex-wrap">
           {products.map((product) => {
             return (
-              <Card
+              <Card className="cursor-pointer" 
                 sx={{ maxWidth: 345, marginBottom: "60px", marginLeft: "60px" }}
                 key={product?.id}
+                onClick={() => handleProduct(product.id)}
               >
                 <div className="">
                   <CardHeader

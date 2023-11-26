@@ -13,12 +13,16 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useRouter } from 'next/navigation';
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Products'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
+  const router = useRouter()
+
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -30,8 +34,13 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+      router.push('/pages/product')
+    // setAnchorElNav(null);
   };
+
+  const handleHome = () => {
+    router.push('/')
+  }
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -47,6 +56,7 @@ function ResponsiveAppBar() {
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
+            onClick={handleHome}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
