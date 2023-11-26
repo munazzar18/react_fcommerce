@@ -14,7 +14,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useEffect, useState } from "react";
 import ApiService from "@/app/services/ApiService";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Oval } from "react-loader-spinner";
+import Loader from "@/app/components/loader/Loader";
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import SearchIcon from '@mui/icons-material/Search';
+import { ToastContainer, toast } from "react-toastify";
+
 
 interface Product {
   id: number;
@@ -27,46 +32,77 @@ interface Product {
   price: number;
 }
 
+interface Category {
+  id: number;
+  category: string;
+}
 
 export default function Product() {
   const [products, setProducts] = useState <Product[]>([])
   const [loader, setLoader] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [category, setCategory] = useState<any>("")
+
+  const [search, setSearch] = useState("")
   
 const getProducts = async () => {
-
-  const res = await ApiService.get("product?page=1")
+  try {
   setLoader(true)
+  const res = await ApiService.get(`product?page=1&search=${search}&categoryIds=${category}`)
   setProducts(res.data.data)
   setLoader(false)
+  } catch (error: any) {
+    setLoader(false)
+    toast.error(error.response.data.message, {
+      position: toast.POSITION.BOTTOM_LEFT,
+      autoClose: 3000,
+    });
+  }
+}
+
+const getCategories = async () => {
+  try {
+  setLoader(true)
+  const res = await ApiService.get("category")
+  setCategories(res.data.data)
+  setLoader(false)
+  } catch (error:any ) {
+    setLoader(false)
+      toast.error(error.response.data.message, {
+        position: toast.POSITION.TOP_LEFT,
+        autoClose: 3000,
+      });
+  }
+
+}
+
+const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  let selectedCategory = e.target.value
+  setCategory(selectedCategory)
+}
+
+const searchChange = (e: any) => {
+  setSearch(e.target.value) 
+ }
  
 
-
+const startSearch = (e: any) => {
+  if(e.key === "Enter"){
+    searchChange(e)
+    getProducts()
+  }
 }
 
   useEffect(() => {
     getProducts()
-  },[])
+    getCategories()
+  },[category])
 
   let loading;
 
   if(loader === true){
      loading = (
-      <div className="fixed inset-0 flex justify-center items-center z-50">
-        <div >
-        <Oval
-              height={80}
-              width={80}
-              color="#4fa94d"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
-              ariaLabel='oval-loading'
-              secondaryColor="#4fa94d"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-      />
-        </div>
-      </div>
+      <Loader/>
      )
         
     }
@@ -78,15 +114,44 @@ const getProducts = async () => {
     <> 
     {loading}
       <div className="m-24">
-        <div className="m-5" >
-          <h1 className="font-semibol text-2xl italic drop-shadow-md" >
+        <div className="m-5 mx-16" >
+          <h1 className="font-semibol text-2xl drop-shadow-md" >
             Chance to get full hands on any product!
           </h1>
         </div>
-        <div className="flex flex-wrap justify-evenly my-2 mx-2 " >
+        <div className="flex justify-between my-5 mx-16 ">
+        <div className="" >
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <TextField 
+        id="input-with-sx" 
+        label="Search" 
+        variant="standard"
+        name="search"
+        value={search}
+        onChange={searchChange}
+        onKeyDown={startSearch}
+        />
+        <ToastContainer/>
+      </Box>
+      </div>
+      <div className="mx-8">
+        <select className="border border-blue-400 p-3 rounded-lg w-72 focus:border-blue-600" id="category"
+        name="category" value={category} onChange={handleCategory} >
+          <option value="">Categories</option>
+          {categories.map((cat) => 
+             (
+              <option  key={cat.id}  value={cat.id} >{cat.id} {cat.category}</option>
+            )
+          )}
+        </select>
+        </div>
+        </div>
+        
+        <div className="flex flex-wrap" >
           {products.map((product) => {
             return (
-              <Card sx={{ maxWidth: 345, marginBottom: '60px' }} key={product?.id}>
+              <Card sx={{ maxWidth: 345, marginBottom: '60px' , marginLeft: "60px" }} key={product?.id}>
                 <div className="bg-gradient-to-r from-indigo-300 to-blue-200" >
               <CardHeader 
                 avatar={
