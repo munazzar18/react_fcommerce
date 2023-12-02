@@ -6,9 +6,9 @@ export default function ProductLayout({
   children: React.ReactNode;
 }) {
   return (
-        <>
-          <Navbar/>
-          {children}
-        </> 
+    <>
+      <Navbar />
+      {children}
+    </>
   );
 }
