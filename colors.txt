@@ -1,0 +1,11 @@
+cool Sunset
+bg-gradient-to-r from-orange-300 to-rose-300
+
+
+orange coral
+bg-gradient-to-r from-orange-400 to-rose-400
+
+
+buttons
+morning
+bg-gradient-to-r from-rose-400 to-orange-300
