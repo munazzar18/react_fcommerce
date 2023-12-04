@@ -1,7 +1,11 @@
+import SearchProducts from "./components/Products/SearchProducts";
+
 const url = "http://localhost:5005/api/";
 
-export async function getProducts() {
-  const res = await fetch(`${url}product?page=1`);
+export async function getProducts(search: string | string[] | undefined) {
+  const res = await fetch(
+    `${url}product?page=1&search=${search ? search : ""}`
+  );
   const data = res.json();
   return data;
 }
@@ -19,8 +23,13 @@ interface Products {
   quantity: number;
 }
 
-export default async function Home() {
-  const allProducts = await getProducts();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const search = searchParams.search;
+  const allProducts = await getProducts(search);
 
   const products: Products[] = await allProducts.data;
 
@@ -33,11 +42,12 @@ export default async function Home() {
       </div>
       <div>
         <div className="form-control mb-3 m-6">
-          <input
+          {/* <input
             type="text"
             placeholder="Search"
             className="input w-24 md:w-auto lg:w-auto xl:w-auto  border-orange-400 focus:border-orange-700 hover:border-orange-200"
-          />
+          /> */}
+          <SearchProducts />
         </div>
       </div>
       <div className="flex flex-wrap justify-between">
