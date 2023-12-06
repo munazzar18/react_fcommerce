@@ -34,13 +34,13 @@ const Navbar = () => {
             </div>
             <div
               tabIndex={0}
-              className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
+              className="mt-3 z-[1] card card-compact bg-gradient-to-r from-orange-300 to-rose-300 dropdown-content w-52 rounded-lg shadow"
             >
-              <div className="card-body">
-                <span className="font-bold text-lg">8 Items</span>
-                <span className="text-info">Subtotal: $999</span>
+              <div className="card-body ">
+                <span className="font-bold text-lg text-white">8 Items</span>
+                <span className="text-white font-semibold">Subtotal: $999</span>
                 <div className="card-actions">
-                  <button className="btn btn-primary btn-block">
+                  <button className="btn bg-gradient-to-r from-rose-400 to-orange-300 btn-block text-white">
                     View cart
                   </button>
                 </div>
@@ -62,19 +62,16 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gradient-to-r from-orange-300 to-rose-300 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
+                <a className="justify-between text-white text-lg">Profile</a>
               </li>
               <li>
-                <a>Settings</a>
+                <a className="text-white text-lg">Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <a className="text-white text-lg">Logout</a>
               </li>
             </ul>
           </div>

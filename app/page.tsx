@@ -3,9 +3,14 @@ import SearchProducts from "./components/Products/SearchProducts";
 
 const url = "http://localhost:5005/api/";
 
-export async function getProducts(search: string | string[] | undefined) {
+export async function getProducts(
+  search: string | string[] | undefined,
+  categoryId: string | string[] | undefined
+) {
   const res = await fetch(
-    `${url}product?page=1&search=${search ? search : ""}`
+    `${url}product?page=1&search=${search ? search : ""}&categoryIds=${
+      categoryId ? categoryId : ""
+    }`
   );
   const data = res.json();
   return data;
@@ -30,7 +35,9 @@ export default async function Home({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const search = searchParams.search;
-  const allProducts = await getProducts(search);
+  const categoryId = searchParams.categoryIds;
+
+  const allProducts = await getProducts(search, categoryId);
 
   const products: Products[] = await allProducts.data;
 
@@ -47,9 +54,9 @@ export default async function Home({
           <SearchProducts />
         </div>
       </div>
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap justify-normal">
         {products.map((product) => (
-          <div className="flex mx-3 " key={product.id}>
+          <div className="flex mx-8 " key={product.id}>
             <div className=" card w-96 bg-base-100 shadow-xl m-4">
               <figure className="p-2">
                 <img
