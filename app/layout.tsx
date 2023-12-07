@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Dosis } from "next/font/google";
 import Navbar from "./components/Navbar/Navbar";
+import Providers from "./components/context/Providers";
 
 const dosis = Dosis({ subsets: ["latin"] });
 
@@ -10,16 +11,18 @@ export const metadata: Metadata = {
   description: "Created by Munazzar",
 };
 
-export default function RootLayout({
-  children,
-}: {
+interface Props {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout(props: Props) {
   return (
     <html lang="en">
       <body className={dosis.className}>
-        <Navbar />
-        {children}
+        <Providers>
+          <Navbar />
+          {props.children}
+        </Providers>
       </body>
     </html>
   );
