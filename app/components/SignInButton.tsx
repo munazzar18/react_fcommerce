@@ -1,10 +1,11 @@
-"use client";
+import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
-const SignInButton = () => {
-  const { data: session } = useSession();
+const SignInButton = async () => {
+  const session = await getServerSession(authOptions);
 
   if (session && session.user)
     return (

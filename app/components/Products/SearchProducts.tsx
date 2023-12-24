@@ -26,7 +26,7 @@ const SearchProducts = () => {
       <input
         type="text"
         placeholder="Search"
-        className="input w-24 md:w-auto lg:w-auto xl:w-auto  border-orange-400 focus:border-orange-700 hover:border-orange-200"
+        className="input w-full md:w-auto lg:w-auto xl:w-auto  border-orange-400 focus:border-orange-700 hover:border-orange-200"
         onChange={handleChange}
         value={search}
         onKeyDown={sendSearch}

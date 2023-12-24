@@ -1,5 +1,7 @@
 import React from "react";
 import SignInButton from "../SignInButton";
+import SearchProducts from "../Products/SearchProducts";
+import CategoriesProducts from "../Products/CategoriesProducts";
 
 const Navbar = () => {
   return (
@@ -8,7 +10,16 @@ const Navbar = () => {
         <div className="flex-1">
           <a className="btn btn-ghost text-xl">F Commerce</a>
         </div>
-        <div className="flex-none">
+        <div className="flex-2">
+          <div className="flex justify-between">
+            <div className="w-full mx-4">
+              <SearchProducts />
+            </div>
+            <div className="w-full mx-4">
+              <CategoriesProducts />
+            </div>
+          </div>
+
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}

@@ -1,6 +1,3 @@
-import CategoriesProducts from "./components/Products/CategoriesProducts";
-import SearchProducts from "./components/Products/SearchProducts";
-
 const url = "http://localhost:5005/api/";
 
 export async function getProducts(
@@ -10,7 +7,8 @@ export async function getProducts(
   const res = await fetch(
     `${url}product?page=1&search=${search ? search : ""}&categoryIds=${
       categoryId ? categoryId : ""
-    }`
+    }`,
+    { next: { revalidate: 3600 } }
   );
   const data = res.json();
   return data;
@@ -47,12 +45,9 @@ export default async function Home({
         <h1 className="text-4xl font-bold text-orange-500 ">
           More than just a reliable e-commerce platform!
         </h1>
-        <CategoriesProducts />
       </div>
       <div>
-        <div className="form-control mb-3 m-6">
-          <SearchProducts />
-        </div>
+        <div className="form-control mb-3 m-6"></div>
       </div>
       <div className="flex flex-wrap justify-normal">
         {products.map((product) => (
