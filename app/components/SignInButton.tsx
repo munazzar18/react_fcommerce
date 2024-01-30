@@ -56,7 +56,7 @@ const SignInButton = async () => {
           className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-gradient-to-r from-orange-300 to-rose-300 rounded-box w-52"
         >
           <li>
-            <Link href={"/api/auth/signin"} className="justify-between text-lg">
+            <Link href={"/login"} className="justify-between text-lg">
               Sign In
             </Link>
           </li>

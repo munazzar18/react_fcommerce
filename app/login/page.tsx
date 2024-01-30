@@ -21,10 +21,10 @@ const Login = () => {
     });
 
     const auth = await res.json();
-
+    const user = auth.data.user;
     const token = auth.data.access_token;
 
-    cookies().set("token", token);
+    cookies().set("authToken", token);
   };
   return (
     <>

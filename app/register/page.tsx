@@ -1,7 +1,47 @@
 import Link from "next/link";
 import React from "react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import ApiService from "../services/ApiService";
 
 const Register = () => {
+  const url = "http://localhost:5005/api/";
+  const register = async (formData: FormData) => {
+    "use server";
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const firstName = formData.get("firstName");
+    const lastName = formData.get("lastName");
+    const mobile = formData.get("mobile");
+    const roles = formData.get("roles");
+    const address = formData.get("address");
+    console.log("FormData:", formData);
+
+    // Validate the form data and save it to the database
+
+    const res = await ApiService.post("auth/register", formData);
+
+    const user = res.data.data.user;
+    cookies().set("user", user);
+    redirect("/validate-otp");
+
+    // const res = await fetch(`${url}auth/register`, {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ email, password }),
+    // });
+
+    // const auth = await res.json();
+
+    // const token = auth.data.access_token;
+
+    // cookies().set("authToken", token);
+
+    // redirect("/");
+  };
   return (
     <>
       <div className="hero min-h-screen bg-white">
@@ -15,7 +55,7 @@ const Register = () => {
             </p>
           </div>
           <div className="card w-full shadow-2xl bg-gradient-to-r from-orange-300 to-rose-300">
-            <form className="card-body">
+            <form action={register} className="card-body">
               <div className="grid grid-cols-2 gap-4 w-full">
                 <div className="form-control ">
                   <label className="label">
@@ -25,6 +65,7 @@ const Register = () => {
                   </label>
                   <input
                     type="text"
+                    name="firstName"
                     placeholder="First Name"
                     className="input input-bordered"
                     required
@@ -38,6 +79,7 @@ const Register = () => {
                   </label>
                   <input
                     type="text"
+                    name="lastName"
                     placeholder="Last Name"
                     className="input input-bordered"
                     required
@@ -51,6 +93,7 @@ const Register = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     placeholder="Email"
                     className="input input-bordered"
                     required
@@ -64,6 +107,7 @@ const Register = () => {
                   </label>
                   <input
                     type="text"
+                    name="mobile"
                     placeholder="Mobile"
                     className="input input-bordered"
                     required
@@ -77,6 +121,7 @@ const Register = () => {
                   </label>
                   <input
                     type="password"
+                    name="password"
                     placeholder="password"
                     className="input input-bordered"
                     required
@@ -93,15 +138,33 @@ const Register = () => {
                       Want to become Seller?
                     </span>
                     <input
+                      name="is_Seller"
                       type="checkbox"
                       className="checkbox border border-white"
+                      value={"seller"}
                     />
                   </label>
                 </div>
               </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-white text-lg font-semibold">
+                    Address
+                  </span>
+                </label>
+                <textarea
+                  name="address"
+                  placeholder="Enter your complete address here"
+                  className="input input-bordered min-h-[120px]"
+                  required
+                ></textarea>
+              </div>
               <div className="flex justify-center">
-                <div className="text-center form-control  w-3/4">
-                  <button className="btn bg-gradient-to-r from-rose-400 to-orange-300 text-white text-lg font-semibold">
+                <div className="text-center form-control  w-full">
+                  <button
+                    type="submit"
+                    className="btn bg-gradient-to-r from-rose-400 to-orange-300 text-white text-lg font-semibold"
+                  >
                     Register
                   </button>
                 </div>
