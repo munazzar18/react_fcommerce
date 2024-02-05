@@ -25,6 +25,7 @@ const Login = () => {
     const token = auth.data.access_token;
 
     cookies().set("authToken", token);
+    cookies().set("user", user);
   };
   return (
     <>

@@ -1,13 +1,16 @@
-import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { cookies } from "next/headers";
 
 const SignInButton = async () => {
-  const session = await getServerSession(authOptions);
+  const token = cookies().get("authToken");
+  const user = cookies().get("user");
+  const username = user?.username;
+  const handleLogout = () => {
+    cookies().delete("authToken");
+  };
 
-  if (session && session.user)
+  if (token)
     return (
       <>
         <div className="dropdown dropdown-end">
@@ -17,9 +20,7 @@ const SignInButton = async () => {
             className="btn btn-ghost border border-orange-400"
           >
             <div className="mx-2">
-              <p className="text-black text-lg font-semibold">
-                {session.user.username}
-              </p>
+              <p className="text-black text-lg font-semibold">{username}</p>
             </div>
           </div>
           <ul
@@ -33,9 +34,9 @@ const SignInButton = async () => {
               <a className="text-lg">Settings</a>
             </li>
             <li>
-              <Link href={"/api/auth/signout"} className="text-lg">
+              <button onClick={handleLogout} className="text-lg">
                 Logout
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
