@@ -1,14 +1,14 @@
 import Link from "next/link";
 import React from "react";
 import { cookies } from "next/headers";
+import LogoutButton from "./LogoutButton";
 
 const SignInButton = async () => {
   const token = cookies().get("authToken");
   const user = cookies().get("user");
-  const username = user?.username;
-  const handleLogout = () => {
-    cookies().delete("authToken");
-  };
+  const userValue = user?.value;
+  const parsedUserName = userValue ? JSON.parse(userValue) : null;
+  const username = parsedUserName?.username;
 
   if (token)
     return (
@@ -34,9 +34,8 @@ const SignInButton = async () => {
               <a className="text-lg">Settings</a>
             </li>
             <li>
-              <button onClick={handleLogout} className="text-lg">
-                Logout
-              </button>
+              {/* <button className="text-lg">Logout</button> */}
+              <LogoutButton />
             </li>
           </ul>
         </div>

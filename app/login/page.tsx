@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const Login = () => {
   const url = "http://localhost:5005/api/";
@@ -21,11 +22,11 @@ const Login = () => {
     });
 
     const auth = await res.json();
-    const user = auth.data.user;
+    const user = JSON.stringify(auth.data.user);
     const token = auth.data.access_token;
-
     cookies().set("authToken", token);
     cookies().set("user", user);
+    redirect("/");
   };
   return (
     <>
